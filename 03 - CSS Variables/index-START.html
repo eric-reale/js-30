@@ -22,9 +22,24 @@
 
   <style>
 
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
     /*
       misc styles, nothing to do with CSS variables
     */
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
 
     body {
       text-align: center;
@@ -45,6 +60,24 @@
   </style>
 
   <script>
+    function handleUpdate() {
+      // console.log(e.target.value) // same as below
+      // console.log(this.value);
+      // console.log(this.dataset)
+      const suffix = this.dataset.sizing || ''; // data attributes of the element, in this case data-sizing
+      // console.log(document.documentElement) // this captures the entire HTML page; once you update sizing, blur, and color then the style properties are displayed
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      // updates the style property variables on the whole page;
+      // dataset is only used to get string of 'px' or '' if there is no dataset
+
+    }
+
+    const inputs = document.querySelectorAll('.controls input');
+    inputs.forEach(input => {
+      input.addEventListener('change', handleUpdate);
+      input.addEventListener('mousemove', handleUpdate);
+    })
+
   </script>
 
 </body>
